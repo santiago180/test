@@ -20,8 +20,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 
-Route::resource('compania', App\Http\Controllers\CompanyController::class);
-Route::resource('proyecto', App\Http\Controllers\ProjectController::class);
-Route::resource('historia', App\Http\Controllers\HistoryController::class);
+Route::resource('compania', App\Http\Controllers\CompanyController::class)->middleware('auth');
+Route::resource('proyecto', App\Http\Controllers\ProjectController::class)->middleware('auth');
+Route::resource('historia', App\Http\Controllers\HistoryController::class)->middleware('auth');
+Route::resource('ticket', App\Http\Controllers\TicketController::class)->middleware('auth');

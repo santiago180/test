@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\Project;
+use App\Models\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -20,10 +21,15 @@ class ProjectController extends Controller
         $projects = Project ::with([
             'company', 
             'histories'=>function($histories){
-                $histories->orderBy('created_at');
+                $histories->orderBy('created_at')
+                ->with([
+                    'tickets',
+                    'tickets.state',
+                ]);
             }
-            ])->orderBy('created_at')->get();
-        return view('project.index', compact(['projects', 'companies']));
+        ])->orderBy('created_at')->get();
+        $states = State::orderBy('id')->get();
+        return view('project.index', compact(['projects', 'companies', 'states']));
     }
 
     /**

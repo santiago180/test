@@ -17,4 +17,9 @@ class History extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class, 'history_id');
+    }
 }

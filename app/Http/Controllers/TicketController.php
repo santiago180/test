@@ -35,7 +35,13 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'task'=>'required',
+        ]);
+
+        $ticket = $request->all();
+        Ticket::create($ticket);
+        return redirect('proyecto');
     }
 
     /**
@@ -67,9 +73,16 @@ class TicketController extends Controller
      * @param  \App\Models\Ticket  $ticket
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ticket $ticket)
+    public function update($id, Request $request)
     {
-        //
+        $request->validate([
+            'task'=>'required',
+        ]);
+        $ticket = Ticket::FindOrFail($id);
+        $new = $request->all();
+        $ticket->fill($new)->save();
+
+        return redirect('proyecto');
     }
 
     /**
@@ -78,8 +91,9 @@ class TicketController extends Controller
      * @param  \App\Models\Ticket  $ticket
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ticket $ticket)
+    public function destroy($id)
     {
-        //
+        Ticket::destroy($id);
+        return redirect('proyecto');
     }
 }
