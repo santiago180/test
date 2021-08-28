@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Company;
 
 class RegisterController extends Controller
 {
@@ -53,7 +54,14 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'company_id' => ['required'],
         ]);
+    }
+
+    public function showRegistrationForm()
+    {
+        $companies = Company::all();
+        return view('auth.register', compact('companies'));
     }
 
     /**
@@ -68,6 +76,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'company_id' => $data['company_id'],
         ]);
     }
 }
