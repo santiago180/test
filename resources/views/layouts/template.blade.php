@@ -33,7 +33,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <a href="#" class="nav-link active">Proyectos</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Compañias</a>
+        <a href="{{ url('compania') }}" class="nav-link">Compañias</a>
       </li>
     </ul>
 
@@ -127,7 +127,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </li>
 
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ url('compania') }}" class="nav-link">
               <i class="mr-1 fas fa-building"></i>
               <p>Compañias</p>
             </a>
