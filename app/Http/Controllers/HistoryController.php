@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\History;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HistoryController extends Controller
 {
@@ -35,7 +36,15 @@ class HistoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'functionality'=>'required',
+        ]);
+        $user = Auth::user();
+        $request->merge(['user_id' => $user->id]);
+
+        $history = $request->all();
+        History::create($history);
+        return redirect('proyecto');
     }
 
     /**
@@ -67,9 +76,15 @@ class HistoryController extends Controller
      * @param  \App\Models\History  $history
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, History $history)
+    public function update($id, Request $request)
     {
-        //
+        $request->validate([
+            'functionality'=>'required',
+        ]);
+        $history = History::FindOrFail($id);
+        $new = $request->all();
+        $history->fill($new)->save();
+        return redirect('proyecto');
     }
 
     /**
@@ -78,8 +93,9 @@ class HistoryController extends Controller
      * @param  \App\Models\History  $history
      * @return \Illuminate\Http\Response
      */
-    public function destroy(History $history)
+    public function destroy($id)
     {
-        //
+        History::destroy($id);
+        return redirect('proyecto');
     }
 }

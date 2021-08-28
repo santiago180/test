@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class ProjectController extends Controller
 {
@@ -14,7 +16,14 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //
+        $companies = Company::orderBy('name')->get();
+        $projects = Project ::with([
+            'company', 
+            'histories'=>function($histories){
+                $histories->orderBy('created_at');
+            }
+            ])->orderBy('created_at')->get();
+        return view('project.index', compact(['projects', 'companies']));
     }
 
     /**
@@ -35,7 +44,9 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $project = $request->all();
+        Project::create($project);
+        return redirect('proyecto');
     }
 
     /**
@@ -44,9 +55,9 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $project)
+    public function show($id)
     {
-        //
+
     }
 
     /**
@@ -67,9 +78,18 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project $project)
+    public function update($id, Request $request)
     {
-        //
+        $request->validate([
+            'name'=>'required',
+            'company_id'=>'required',
+            'description'=>'required'
+        ]);
+        $project = Project::FindOrFail($id);
+        $new = $request->all();
+        $project->fill($new)->save();
+
+        return redirect('proyecto');
     }
 
     /**
@@ -78,8 +98,9 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Project $project)
+    public function destroy($id)
     {
-        //
+        Project::destroy($id);
+        return redirect('proyecto');
     }
 }

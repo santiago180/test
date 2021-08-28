@@ -17,6 +17,8 @@ class CreateProjectsTable extends Migration
             $table->id();
             $table->string('name')->nullable()->comment('nombre del proyecto');
             $table->integer('company_id')->comment('compañia asociada a proyecto');
+            $table->text('description')->nullable()->comment('descripcion del proyecto');
+
             $table->softDeletes();
             $table->timestamps();
 
