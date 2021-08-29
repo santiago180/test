@@ -23,8 +23,13 @@ class ProjectController extends Controller
             'histories'=>function($histories){
                 $histories->orderBy('created_at')
                 ->with([
-                    'tickets',
-                    'tickets.state',
+                    'tickets'=>function($ticket){
+                        $ticket->with([
+                            'state'=>function($state){
+                                $state->orderBy('created_at');
+                            }
+                        ]);
+                    },
                 ]);
             }
         ])->orderBy('created_at')->get();

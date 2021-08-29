@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-12">
 
-                <a href="#" class="card-link" data-toggle="modal" data-target="#tickets">Ver Tickets</a>
+                <a href="#" class="card-link" data-toggle="modal" data-target="#tickets{{$history->id}}">Ver Tickets</a>
                 @include('ticket.index')
                 
                 <button title="Añadir Historia" class="btn float-right btn-outline-info btn-sm" type="button" data-toggle="collapse" data-target="#edit-history-{{$history->id}}" aria-expanded="false" aria-controls="edit-history-{{$history->id}}">
