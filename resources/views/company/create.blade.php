@@ -12,7 +12,7 @@
       <div class="modal-body">
         <form action="{{ url('compania') }} " method="post">
         @csrf
-        @include('company.form')
+        @include('company.form_create')
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
         <button type="submit" class="btn btn-primary">Agregar</button>
