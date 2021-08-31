@@ -17,7 +17,7 @@
                 <form action="{{  url('compania/'.$company->id)  }}" method="POST">
                     @csrf
                     @method('PATCH')
-                    @include('Company.form')
+                    @include('company.form')
                 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
